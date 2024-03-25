@@ -9,29 +9,243 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://unpkg.com/draggabilly@3/dist/draggabilly.pkgd.min.js"></script>
     <link rel="stylesheet" href="style.css">
-</head>
-<body>
-<script>
-// initialize Packery
-var $grid = $('.grid').packery({
-  itemSelector: '.grid-item',
-  // columnWidth helps with drop positioning
-  columnWidth: 100
+
+    <script>
+
+$(document).ready(function(){
+    $('.button-container').click(function() {
+        // Your code here
+        $('#result').text('Button clicked');
+        update_button();
+    });
 });
 
-// make all items draggable
-var $items = $grid.find('.grid-item').draggable();
-// bind drag events to Packery
-$grid.packery( 'bindUIDraggableEvents', $items );
-
 // jQuery
-$draggable.draggabilly('enable')
+function update_button(event, pointer){
+    pckry.getItemElements().forEach(itemElem => {
+            // var position = pckry.getPosition(itemElem);
+            // console.log('Position of item:', itemElem);
+            console.log('Position of item:', itemElem.style.left);
+    });
+}
 
-</script>
+
+document.addEventListener("DOMContentLoaded", runPackery, false);
+var pckry;
+function runPackery() {
+  pckry = new Packery(".grid", {
+    itemSelector: ".grid-item",
+    columnWidth: 200,
+    gutter: 10
+  });
+
+  pckry.getItemElements().forEach(itemElem => {
+    let draggie = new Draggabilly(itemElem, {
+      //containment: '.grid', // limit item with in boundary of container
+      handle: '.oxy-card-title',
+    //   axis: 'x',
+      containment: '.demo--containment__container'
+    });
+    draggie.on( 'dragEnd', update_button)
+    pckry.bindDraggabillyEvents(draggie);
+  });
+  
+  document.querySelector('.grid')
+    .addEventListener('click', collapse, false);
+}
+
+function collapse(ev) {
+  let isExpanded = false;
+  let target = ev.target;
+  let gridItem = target.closest('.grid-item');
+  
+  if (!target.getAttribute('class').match(/(collapsable|expand1x|expand2x)/i))   {
+    return;
+  }
+  
+  if (target.getAttribute('class').match(/collapsable/i)) {
+      gridItem.classList.toggle('collapsed');
+      isExpanded = !gridItem.classList.contains('collapsed');        
+  }
+  
+  if (target.getAttribute('class').match(/expand1x/i) &&  gridItem.classList.contains('twox')) {
+      gridItem.classList.remove('twox');
+      isExpanded = false;        
+  }
+  
+  if (target.getAttribute('class').match(/expand2x/i) &&  !gridItem.classList.contains('twox')) {
+      gridItem.classList.add('twox');
+      isExpanded = true;        
+  }
+  
+  isExpanded ? pckry.fit(gridItem) : pckry.shiftLayout();
+  
+}
+
+if (window.Element && !Element.prototype.closest) {
+  Element.prototype.closest = function(s) {
+    var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+      i,
+      el = this;
+    do {
+      i = matches.length;
+      while (--i >= 0 && matches.item(i) !== el) {}
+    } while (i < 0 && (el = el.parentElement));
+    return el;
+  };
+}
+
+
+    </script>
+</head>
+<body>
+
+    <div class="demo--containment__container">
+        
     <div class="grid">
-        <div class="grid-item">Something written 1</div>
-        <div class="grid-item grid-item--width2">Something written 2</div>
-        <div class="grid-item">Something written 3</div>
+
+        <!---->
+        <div class="grid-item  mdl-shadow--2dp">
+          <oxy-card>
+            <div class="oxy-card" style="background:#feabcd">
+              <!---->
+              <h6 class="oxy-card-title">Status 1 &nbsp;
+                <span class="collapsable">C</span>
+                <span class="expand1x">1x</span>
+                <span class="expand2x">2x</span>
+              </h6>
+              <div class="oxy-card-content">
+                <div>
+                    Click on<br>
+                    C : to collapse/expand<br>
+                    1x : set the size to 1 unit<br>
+                    2x : set the size to 2 unit<br>
+                </div>
+              </div>
+            </div>
+          </oxy-card>
+        </div>
+        
+        <div class="grid-item twox ">
+          <oxy-card>
+            <div class="oxy-card mdl-shadow--2dp" style="background:#4286f4">
+              <!---->
+              <h6 class="oxy-card-title">Status 2  &nbsp;
+                <span class="collapsable">C</span>
+                <span class="expand1x">1x</span>
+                <span class="expand2x">2x</span>
+              </h6>
+              <div class="oxy-card-content">
+                <div>
+                  <form>
+                    name <input>
+                    <button>button</button>
+                  </form>
+                  <br>
+                  make sure form is accessible
+                </div>
+              </div>
+            </div>
+          </oxy-card>
+        </div>
+        
+          <div class="grid-item  mdl-shadow--2dp">
+          <oxy-card>
+            <div class="oxy-card"  style="background:#84ffda">
+              <!---->
+              <h6 class="oxy-card-title">Status 3  &nbsp;
+                <span class="collapsable">C</span>
+                <span class="expand1x">1x</span>
+                <span class="expand2x">2x</span>
+              </h6>
+              <div class="oxy-card-content">
+                <div>
+                  content
+                </div>
+              </div>
+            </div>
+          </oxy-card>
+        </div>
+        
+          <div class="grid-item  mdl-shadow--2dp">
+          <oxy-card>
+            <div class="oxy-card" style="background:#d7ffba">
+              <!---->
+              <h6 class="oxy-card-title">Status 4  &nbsp;
+                <span class="collapsable">C</span>
+                <span class="expand1x">1x</span>
+                <span class="expand2x">2x</span>
+              </h6>
+              <div class="oxy-card-content">
+                <div>
+                  content
+                </div>
+              </div>
+            </div>
+          </oxy-card>
+        </div>
+        
+          <div class="grid-item  mdl-shadow--2dp">
+          <oxy-card>
+            <div class="oxy-card" style="background:#ffd3ba">
+              <!---->
+              <h6 class="oxy-card-title">Status 5  &nbsp;
+                <span class="collapsable">C</span>
+                <span class="expand1x">1x</span>
+                <span class="expand2x">2x</span>
+              </h6>
+              <div class="oxy-card-content">
+                <div>
+                  content
+                </div>
+              </div>
+            </div>
+          </oxy-card>
+        </div>
+        
+          <div class="grid-item  mdl-shadow--2dp">
+          <oxy-card>
+            <div class="oxy-card" style="background:#ffbaf2">
+              <!---->
+              <h6 class="oxy-card-title">Status 6  &nbsp;
+                <span class="collapsable">C</span>
+                <span class="expand1x">1x</span>
+                <span class="expand2x">2x</span>
+              </h6>
+              <div class="oxy-card-content">
+                <div>
+                  content
+                </div>
+              </div>
+            </div>
+          </oxy-card>
+        </div>
+        
+        <div class="grid-item  mdl-shadow--2dp">
+          <oxy-card>
+            <div class="oxy-card" style="background:#adffff">
+              <!---->
+              <h6 class="oxy-card-title">Status 7  &nbsp;
+                <span class="collapsable">C</span>
+                <span class="expand1x">1x</span>
+                <span class="expand2x">2x</span>
+              </h6>
+              <div class="oxy-card-content">
+                <div>
+                  content
+                </div>
+              </div>
+            </div>
+          </oxy-card>
+        </div>
       </div>
+
+    </div>
+      <div class="button-container">
+        <button type="button">Click Me!</button>
+    </div>
+    <div id="result">
+        <!-- Here to appear the result -->
+    </div>
 </body>
 </html>
