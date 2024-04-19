@@ -17,8 +17,8 @@ $(document).ready(function(){
         // Your code here
         var correct_order = true
         pckry.getItemElements().forEach(itemElem => {
-            // console.log('Index:', $(itemElem).attr("index"));
-            // console.log('Position of item:', itemElem.style.left);
+            console.log('Index:', $(itemElem).attr("index"));
+            console.log('Position of item:', itemElem.style.left);
             if (itemElem.style.left != $(itemElem).attr("index")*210+"px") {
               console.log('Position of item:', itemElem.style.left);
               console.log('Index:', $(itemElem).attr("index")*210+"px");
@@ -35,13 +35,12 @@ $(document).ready(function(){
         update_button();
     });
   var i = 0;
-  let arr = [0, 1, 2, 3, 4, 5, 6];
-  arr.sort(() => Math.random() - 0.5);
-  console.log(arr)
+  // let arr = [0, 1, 2, 3, 4, 5, 6];
+  // arr.sort(() => Math.random() - 0.5);
+  // console.log(arr)
   pckry.getItemElements().forEach(itemElem => {
     $(itemElem).attr('index', i)
-    console.log('This:',);
-    itemElem.style.left=arr[i]*210+'px'
+    // itemElem.style.left=arr[i]*210+'px'
     i=(i+1);
   })
 });
@@ -49,7 +48,7 @@ $(document).ready(function(){
 // jQuery
 function update_button(event, pointer){
     pckry.getItemElements().forEach(itemElem => {
-
+      console.log('Position of item:', itemElem.style.left);
     });
 }
 
@@ -68,7 +67,7 @@ function runPackery() {
     
     let draggie = new Draggabilly(itemElem, {
       //containment: '.grid', // limit item with in boundary of container
-      handle: '.oxy-card-title',
+      handle: '.oxy-card',
       axis: 'x',
       containment: '.demo--containment__container'
     });
@@ -109,47 +108,18 @@ function collapse(ev) {
   
 }
 
-// if (window.Element && !Element.prototype.closest) {
-//   Element.prototype.closest = function(s) {
-//     var matches = (this.document || this.ownerDocument).querySelectorAll(s),
-//       i,
-//       el = this;
-//     do {
-//       i = matches.length;
-//       while (--i >= 0 && matches.item(i) !== el) {}
-//     } while (i < 0 && (el = el.parentElement));
-//     return el;
-//   };
-// }
-
-// (function ($) {
-//   var number_elements = 7;
-//   pckry.getItemElements().forEach(itemElem => {
-//     console.log('This:',Math.random());
-//   })
-// })(jQuery);
-// (function ($) {
-  
-//   $.fn.randomize = function (tree, childElem) {
-//     console.log('This:', $(this));
-//     return this.each(function () {
-//       var $this = $(this);
-//       if (tree) $this = $(this).find(tree);
-//       var unsortedElems = $this.children(childElem);
-//       var elems = unsortedElems.clone();
-
-//       elems.sort(function () {
-//         return Math.round(Math.random()) - 0.5;
-//       });
-
-//       for (var i = 0; i < elems.length; i++)
-//         unsortedElems.eq(i).replaceWith(elems[i]);
-//     });
-//   };
-// })(jQuery);
-
-// $("div.grid").randomize("div.grid-item");
-
+if (window.Element && !Element.prototype.closest) {
+  Element.prototype.closest = function(s) {
+    var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+      i,
+      el = this;
+    do {
+      i = matches.length;
+      while (--i >= 0 && matches.item(i) !== el) {}
+    } while (i < 0 && (el = el.parentElement));
+    return el;
+  };
+}
     </script>
 </head>
 <body>
@@ -163,15 +133,15 @@ function collapse(ev) {
           <oxy-card>
             <div class="oxy-card" style="background:#feabcd">
               <!---->
-              <h6 class="oxy-card-title">Discovery of x-rays &nbsp;
-                <!-- <span class="expand1x">1x</span>
-                <span class="expand2x">2x</span> -->
+              <h6 class="oxy-card-title">First computer algorithm &nbsp;
               </h6>
-              <img src="Pictures/First_medical_X-ray_by_Wilhelm_Röntgen.jpg" style="width:200px;">
-              <span class="collapsable" type="button" style = "font-family: Arial, Helvetica, sans-serif">More information</span>
+              <div class="image_box">
+                <img src="Pictures/resized/lovelace.jpg" style="width:200px;">
+              </div>
+              <span class="collapsable">More information</span>
               <div class="oxy-card-content">
                 <div>
-                    The first medical x-ray image. Taken of Anna Bertha Ludwig's hand by Wilhelm Röntgen
+                    The first computer algorithm was invented by Ada Lovelace to calculate the sequence of Bernoulli numbers.
                 </div>
               </div>
             </div>
@@ -182,24 +152,15 @@ function collapse(ev) {
           <oxy-card>
             <div class="oxy-card mdl-shadow--2dp" style="background:#4286f4">
               <!---->
-              <h6 class="oxy-card-title">Status 2  &nbsp;
-                <span class="collapsable">C</span>
-                <span class="expand1x">1x</span>
-                <span class="expand2x">2x</span>
+              <h6 class="oxy-card-title">Discovery of x-rays  &nbsp;
               </h6>
+              <div class="image_box">
+                <img src="Pictures/resized/rontgen.jpg" style="width:200px;">
+              </div>
+              <span class="collapsable">More information</span>
               <div class="oxy-card-content">
                 <div>
-                  <form>
-                    name <input>
-                    <button>button</button>
-                  </form>
-                  <br>
-                  make sure form is accessible
-
-                  Click on<br>
-                  C : to collapse/expand<br>
-                  1x : set the size to 1 unit<br>
-                  2x : set the size to 2 unit<br>
+                  The picture shows the first medical x-ray image, taken of Anna Bertha Ludwig's hand by Wilhelm Röntgen shortly after his discovery of x-rays.
                 </div>
               </div>
             </div>
@@ -210,14 +171,15 @@ function collapse(ev) {
           <oxy-card>
             <div class="oxy-card"  style="background:#84ffda">
               <!---->
-              <h6 class="oxy-card-title">Status 3  &nbsp;
-                <span class="collapsable">C</span>
-                <span class="expand1x">1x</span>
-                <span class="expand2x">2x</span>
+              <h6 class="oxy-card-title">X-rays in use in WW1  &nbsp;
               </h6>
+              <div class="image_box">
+                <img src="Pictures/resized/curie.jpg" style="width:200px;">
+              </div>
+              <span class="collapsable">More information</span>
               <div class="oxy-card-content">
                 <div>
-                  content
+                  X-rays were in use as a diagnostic tool in world war 1. The picture shows a mobile x-ray unit developed and run by Nobel prize winner Marie Curie.
                 </div>
               </div>
             </div>
@@ -228,14 +190,15 @@ function collapse(ev) {
           <oxy-card>
             <div class="oxy-card" style="background:#d7ffba">
               <!---->
-              <h6 class="oxy-card-title">Status 4  &nbsp;
-                <span class="collapsable">C</span>
-                <span class="expand1x">1x</span>
-                <span class="expand2x">2x</span>
+              <h6 class="oxy-card-title">Radon transform &nbsp;
               </h6>
+              <div class="image_box">
+                <img src="Pictures/resized/radon.jpg" style="width:200px;">
+              </div>
+              <span class="collapsable">More information</span>
               <div class="oxy-card-content">
                 <div>
-                  content
+                  Johann Radon first described the transformation required to reconstruct a volume from 2D x-ray projections.
                 </div>
               </div>
             </div>
@@ -246,14 +209,15 @@ function collapse(ev) {
           <oxy-card>
             <div class="oxy-card" style="background:#ffd3ba">
               <!---->
-              <h6 class="oxy-card-title">Status 5  &nbsp;
-                <span class="collapsable">C</span>
-                <span class="expand1x">1x</span>
-                <span class="expand2x">2x</span>
+              <h6 class="oxy-card-title">Programmable computer &nbsp;
               </h6>
+              <div class="image_box">
+                <img src="Pictures/resized/baby.jpg" style="width:200px;">
+              </div>
+              <span class="collapsable">More information</span>
               <div class="oxy-card-content">
                 <div>
-                  content
+                  The Manchester baby machine was the first stored program computer. Its development paved the way for using computers for complex calculations, like tomographic reconstruction.
                 </div>
               </div>
             </div>
@@ -264,14 +228,15 @@ function collapse(ev) {
           <oxy-card>
             <div class="oxy-card" style="background:#ffbaf2">
               <!---->
-              <h6 class="oxy-card-title">Status 6  &nbsp;
-                <span class="collapsable">C</span>
-                <span class="expand1x">1x</span>
-                <span class="expand2x">2x</span>
+              <h6 class="oxy-card-title">First CT scanner  &nbsp;
               </h6>
+              <div class="image_box">
+                <img src="Pictures/resized/baby.jpg" style="width:200px;">
+              </div>
+              <span class="collapsable">More information</span>
               <div class="oxy-card-content">
                 <div>
-                  content
+                  This needs to be a different picture
                 </div>
               </div>
             </div>
@@ -282,14 +247,15 @@ function collapse(ev) {
           <oxy-card>
             <div class="oxy-card" style="background:#adffff">
               <!---->
-              <h6 class="oxy-card-title">Status 7  &nbsp;
-                <span class="collapsable">C</span>
-                <span class="expand1x">1x</span>
-                <span class="expand2x">2x</span>
+              <h6 class="oxy-card-title">Tomography Nobel Prize  &nbsp;
               </h6>
+              <div class="image_box">
+                <img src="Pictures/resized/cormack_hounsfield.png" style="width:200px;">
+              </div>
+              <span class="collapsable">More information</span>
               <div class="oxy-card-content">
                 <div>
-                  content
+                  The Nobel Prize in Physiology or Medicine was awarded to Allan Cormack and Geoffrey Hounsfield for their work on computer assisted tomography.
                 </div>
               </div>
             </div>
@@ -299,7 +265,7 @@ function collapse(ev) {
 
     </div>
       <div class="button-container">
-        <button type="button">Click Me!</button>
+        <button type="button">Check order</button>
     </div>
     <div id="result">
         <!-- Here to appear the result -->

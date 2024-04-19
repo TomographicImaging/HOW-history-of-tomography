@@ -19,13 +19,22 @@
   span {
     cursor: default;
     display:inline-block;
-  }
-
- 
+  } 
 }
 
 .oxy-card-content {
   height: 200px;
+}
+
+.collapsable {
+  font-family: Arial, Helvetica, sans-serif; 
+  color: #00529b;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.image_box {
+  height: 300px;
 }
 
 .collapsed .oxy-card-content {
@@ -55,6 +64,7 @@
   text-transform: uppercase;
 }
 
+
 .oxy-card .oxy-card-content {
   padding: 10px;
   font-family: Arial, Helvetica, sans-serif;
@@ -76,7 +86,8 @@
 
 .demo--containment__container {
     top: -2.4em;
+    height: 650px;
     padding: 15px 2.5%;
     border-radius: 10px;
-    border: 6px solid #FA0;
+    /* border: 6px solid #FA0; */
   }
