@@ -15,17 +15,41 @@
 $(document).ready(function(){
     $('.button-container').click(function() {
         // Your code here
-        $('#result').text('Button clicked');
+        var correct_order = true
+        pckry.getItemElements().forEach(itemElem => {
+            // console.log('Index:', $(itemElem).attr("index"));
+            // console.log('Position of item:', itemElem.style.left);
+            if (itemElem.style.left != $(itemElem).attr("index")*210+"px") {
+              console.log('Position of item:', itemElem.style.left);
+              console.log('Index:', $(itemElem).attr("index")*210+"px");
+              correct_order = false
+            }
+            });
+         if (correct_order == true){
+          $('#result').text('Order is correct!');
+         } else {
+          $('#result').text('Order is not correct!');
+         }
+         
+        
         update_button();
     });
+  var i = 0;
+  let arr = [0, 1, 2, 3, 4, 5, 6];
+  arr.sort(() => Math.random() - 0.5);
+  console.log(arr)
+  pckry.getItemElements().forEach(itemElem => {
+    $(itemElem).attr('index', i)
+    console.log('This:',);
+    itemElem.style.left=arr[i]*210+'px'
+    i=(i+1);
+  })
 });
 
 // jQuery
 function update_button(event, pointer){
     pckry.getItemElements().forEach(itemElem => {
-            // var position = pckry.getPosition(itemElem);
-            // console.log('Position of item:', itemElem);
-            console.log('Position of item:', itemElem.style.left);
+
     });
 }
 
@@ -36,14 +60,16 @@ function runPackery() {
   pckry = new Packery(".grid", {
     itemSelector: ".grid-item",
     columnWidth: 200,
-    gutter: 10
+    gutter: 10,
+    horizontal: true
   });
-
+  
   pckry.getItemElements().forEach(itemElem => {
+    
     let draggie = new Draggabilly(itemElem, {
       //containment: '.grid', // limit item with in boundary of container
       handle: '.oxy-card-title',
-    //   axis: 'x',
+      axis: 'x',
       containment: '.demo--containment__container'
     });
     draggie.on( 'dragEnd', update_button)
@@ -80,21 +106,49 @@ function collapse(ev) {
   
   isExpanded ? pckry.fit(gridItem) : pckry.shiftLayout();
   
+  
 }
 
-if (window.Element && !Element.prototype.closest) {
-  Element.prototype.closest = function(s) {
-    var matches = (this.document || this.ownerDocument).querySelectorAll(s),
-      i,
-      el = this;
-    do {
-      i = matches.length;
-      while (--i >= 0 && matches.item(i) !== el) {}
-    } while (i < 0 && (el = el.parentElement));
-    return el;
-  };
-}
+// if (window.Element && !Element.prototype.closest) {
+//   Element.prototype.closest = function(s) {
+//     var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+//       i,
+//       el = this;
+//     do {
+//       i = matches.length;
+//       while (--i >= 0 && matches.item(i) !== el) {}
+//     } while (i < 0 && (el = el.parentElement));
+//     return el;
+//   };
+// }
 
+// (function ($) {
+//   var number_elements = 7;
+//   pckry.getItemElements().forEach(itemElem => {
+//     console.log('This:',Math.random());
+//   })
+// })(jQuery);
+// (function ($) {
+  
+//   $.fn.randomize = function (tree, childElem) {
+//     console.log('This:', $(this));
+//     return this.each(function () {
+//       var $this = $(this);
+//       if (tree) $this = $(this).find(tree);
+//       var unsortedElems = $this.children(childElem);
+//       var elems = unsortedElems.clone();
+
+//       elems.sort(function () {
+//         return Math.round(Math.random()) - 0.5;
+//       });
+
+//       for (var i = 0; i < elems.length; i++)
+//         unsortedElems.eq(i).replaceWith(elems[i]);
+//     });
+//   };
+// })(jQuery);
+
+// $("div.grid").randomize("div.grid-item");
 
     </script>
 </head>
@@ -109,17 +163,15 @@ if (window.Element && !Element.prototype.closest) {
           <oxy-card>
             <div class="oxy-card" style="background:#feabcd">
               <!---->
-              <h6 class="oxy-card-title">Status 1 &nbsp;
-                <span class="collapsable">C</span>
-                <span class="expand1x">1x</span>
-                <span class="expand2x">2x</span>
+              <h6 class="oxy-card-title">Discovery of x-rays &nbsp;
+                <!-- <span class="expand1x">1x</span>
+                <span class="expand2x">2x</span> -->
               </h6>
+              <img src="Pictures/First_medical_X-ray_by_Wilhelm_Röntgen.jpg" style="width:200px;">
+              <span class="collapsable" type="button" style = "font-family: Arial, Helvetica, sans-serif">More information</span>
               <div class="oxy-card-content">
                 <div>
-                    Click on<br>
-                    C : to collapse/expand<br>
-                    1x : set the size to 1 unit<br>
-                    2x : set the size to 2 unit<br>
+                    The first medical x-ray image. Taken of Anna Bertha Ludwig's hand by Wilhelm Röntgen
                 </div>
               </div>
             </div>
@@ -143,6 +195,11 @@ if (window.Element && !Element.prototype.closest) {
                   </form>
                   <br>
                   make sure form is accessible
+
+                  Click on<br>
+                  C : to collapse/expand<br>
+                  1x : set the size to 1 unit<br>
+                  2x : set the size to 2 unit<br>
                 </div>
               </div>
             </div>
