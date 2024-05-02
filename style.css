@@ -3,6 +3,11 @@
 /* $widget-gutter: 0px; */
 /* $columns: 3; */
 
+body {
+  overflow: hidden;
+}
+
+
 * {
   box-sizing: border-box;
 }
@@ -27,7 +32,7 @@
 }
 
 .collapsable {
-  font-family: Arial, Helvetica, sans-serif; 
+  font-family: Verdana, Arial, Helvetica, sans-serif; 
   color: #00529b;
   font-size: 14px;
   font-weight: 800;
@@ -58,7 +63,7 @@
   font-size: 18px;
   font-size: 1.125rem;
   font-weight: 800;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
   margin: 0;
   padding: .625rem;
   text-transform: uppercase;
@@ -67,7 +72,7 @@
 
 .oxy-card .oxy-card-content {
   padding: 10px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 
 /*****************/
@@ -91,3 +96,67 @@
     border-radius: 10px;
     /* border: 6px solid #FA0; */
   }
+
+  .result-container {
+    /* top: -2.4em; */
+    /* padding: 15px 2.5%; */
+    border-radius: 10px;
+    width:200;
+    color: #00529b;
+    font-size: 18px;
+    font-size: 1.125rem;
+    font-weight: 800;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+  }
+
+  .button-container {
+    /* top: -2.4em; */
+    padding: 15px 2.5%;
+    border-radius: 10px;
+    width:500;
+    height:500;
+    /* border: 6px solid #FA0; */
+  }
+
+  .shuffle-button-container {
+    /* top: -2.4em; */
+    padding: 15px 2.5%;
+    border-radius: 10px;
+    width: 200;
+    /* border: 6px solid #FA0; */
+  }
+
+  * {
+    box-sizing: border-box;
+}
+
+.particle {
+    --x: 0;
+    --y: 0;
+    background-color: rebeccapurple;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 5px;
+    width: 5px;
+    z-index: -1;
+}
+
+.particle.move {
+    animation: move 2000ms linear forwards;
+}
+
+@keyframes move {
+    to {
+        transform: translate(var(--x), var(--y));
+    }
+    
+    95% {
+        opacity: 1;
+    }
+    
+    100% {
+        opacity: 0;
+    }
+}
