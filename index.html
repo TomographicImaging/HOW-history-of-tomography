@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOW</title>
     <script src="https://unpkg.com/packery@2/dist/packery.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/preset-confetti@3/tsparticles.preset.confetti.bundle.min.js"></script>
     <!-- <script src="packery.pkgd.min.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://unpkg.com/draggabilly@3/dist/draggabilly.pkgd.min.js"></script>
     <link rel="stylesheet" href="style.css">
-
     <script>
+    
+      
 
 $(document).ready(function(){
     $('.check_button').click(function() {
@@ -174,7 +176,7 @@ function collapse(ev) {
               <span class="collapsable">Did you know:</span>
               <div class="oxy-card-content">
                 <div>
-                  X-rays started to be used as a tool in medicine very soon after their discovery, for example in world war 1. The picture shows a mobile x-ray unit developed and run by Nobel prize winner Marie Curie.
+                  X-rays started to be used as a tool in medicine very soon after their discovery, for example in World War 1. The picture shows a mobile x-ray unit developed and run by Nobel prize winner Marie Curie.
                 </div>
               </div>
             </div>
@@ -237,7 +239,7 @@ function collapse(ev) {
               <span class="collapsable">Did you know:</span>
               <div class="oxy-card-content">
                 <div>
-                  The picture shows the first x-ray image, taken of Anna Bertha Ludwig's hand by Wilhelm Röntgen shortly after his discovery of x-rays. The image shows the bones of her hand and her wedding ring.
+                  The picture shows the first x-ray image, taken of Anna Bertha Ludwig's hand by Wilhelm Röntgen shortly after the discovery of x-rays. The image shows the bones of her hand and her wedding ring.
                 </div>
               </div>
             </div>
@@ -279,7 +281,7 @@ function collapse(ev) {
               <span class="collapsable">Did you know:</span>
               <div class="oxy-card-content">
                 <div>
-                  Johann Radon was the mathematician to first describe the integral transform of lines through an image, a technique required to reconstruct a volume from 2D x-ray projections.  
+                  Johann Radon was the mathematician to first describe the integral transform of lines through a volume, a technique required to reconstruct an image from 2D x-ray projections.  
                 </div>
               </div>
             </div>
@@ -328,53 +330,78 @@ function collapse(ev) {
             }
             });
          if (correct_order == true){
-            for (let j = 0;j<7;j++){
-            setTimeout(() => {
-              
-                const particles = [];
-                const color = randomColor();
-                
-                const particle = document.createElement('span');
-                particle.classList.add('particle', 'move');
-                const x = $(document.getElementById("btn")).offset().left-600 + j*200 + 'px';
-                const y = $(document.getElementById("btn")).offset().top-420+(Math.random())*50 + 'px'
-                console.log(Math.random() * window.innerWidth - window.innerWidth / 2 + 'px')
-                console.log(Math.random() * (window.innerHeight - window.innerHeight / 2) + 'px')
-                console.log('x: ' + x)
-                console.log('y: ' + y)
-                particle.style.setProperty('--x', x);
-                particle.style.setProperty('--y', y);
-                particle.style.background = color;
-                for(let i=0; i<100; i++) {
-                    const innerP = document.createElement('span');
-                    innerP.classList.add('particle', 'move');
-                    innerP.style.transform = `translate(${x}, ${y})`;
-          
-                    const xs = Math.random() * 200 - 100 + 'px';
-                    const ys = Math.random() * 200 - 100 + 'px';
-
-                    innerP.style.setProperty('--x', `calc(${x} + ${xs})`);
-                    innerP.style.setProperty('--y', `calc(${y} + ${ys})`);
-                    innerP.style.animationDuration =  '1000ms';
-                    innerP.style.background = color;
-                    
-                    btn.appendChild(innerP);
-                    particles.push(innerP)
-                }
-              
-                setTimeout(() => {
-                    particles.forEach(particle => {
-                        particle.remove();
-                    })
-                }, 2000)
-            }, 100);
-          }
+          tsParticles.load({
+            id: "tsparticles",
+            options: {
+              emitters: [
+                {
+                  life: {
+                    duration: 5,
+                    count: 1,
+                  },
+                  position: {
+                    x: 15,
+                    y: 30,
+                  },
+                  particles: {
+                    move: {
+                      direction: "top-right",
+                    },
+                  },
+                },
+                {
+                  life: {
+                    duration: 5,
+                    count: 1,
+                  },
+                  position: {
+                    x: 50,
+                    y: 0,
+                  },
+                  particles: {
+                    move: {
+                      direction: "top-right",
+                    },
+                  },
+                },
+                {
+                  life: {
+                    duration: 5,
+                    count: 1,
+                  },
+                  position: {
+                    x: 75,
+                    y: 30,
+                  },
+                  particles: {
+                    move: {
+                      direction: "top-left",
+                    },
+                  },
+                },
+                {
+                  life: {
+                    duration: 5,
+                    count: 1,
+                  },
+                  position: {
+                    x: 50,
+                    y: 40,
+                  },
+                  particles: {
+                    move: {
+                      direction: "top-left",
+                    },
+                  },
+                },
+              ],
+              preset: "confetti",
+            },
+          });
+            
         }
       });
-      
-      function randomColor() {
-         return `hsl(${Math.floor(Math.random() * 361)}, 100%, 50%)`;
-      }
+
         </script>
 
       </div>
