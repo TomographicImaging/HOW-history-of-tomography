@@ -1,7 +1,12 @@
-$widget-width: 200px;
-$widget-height: 200px;
-$widget-gutter: 0px;
-$columns: 3;
+/* $widget-width: 200px; */
+/* $widget-height: 200px; */
+/* $widget-gutter: 0px; */
+/* $columns: 3; */
+
+body {
+  overflow: hidden;
+}
+
 
 * {
   box-sizing: border-box;
@@ -15,33 +20,41 @@ $columns: 3;
 
 .oxy-card-title {
   display:block;
-  height: 40px;
   cursor: move;
   span {
     cursor: default;
     display:inline-block;
-  }
-
- 
+  } 
 }
 
 .oxy-card-content {
-  height: $widget-height;
+  height: 230px;
+}
+
+.collapsable {
+  font-family: Verdana, Arial, Helvetica, sans-serif; 
+  color: #00529b;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.image_box {
+  height: 300px;
 }
 
 .collapsed .oxy-card-content {
   display: none;
 }
 .grid {
-  width: ($widget-width * $columns + $widget-gutter * ($columns - 1));
+  width: (200px * 3 + 10px * (3 - 1));
 }
 
 .grid-item {
   float: left;
-  width: $widget-width;
+  width: 200px;
 }
 .grid-item.twox {
-  width: $widget-width * 2 + $widget-gutter;
+  width: 200px * 2 + 10px;
 }
 
 .oxy-card .oxy-card-title {
@@ -50,13 +63,16 @@ $columns: 3;
   font-size: 18px;
   font-size: 1.125rem;
   font-weight: 800;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
   margin: 0;
   padding: .625rem;
   text-transform: uppercase;
 }
 
+
 .oxy-card .oxy-card-content {
   padding: 10px;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 
 /*****************/
@@ -75,8 +91,41 @@ $columns: 3;
 
 .demo--containment__container {
     top: -2.4em;
-    height: 250px;
+    height: 650px;
     padding: 15px 2.5%;
     border-radius: 10px;
-    border: 6px solid #FA0;
+    /* border: 6px solid #FA0; */
   }
+
+  .result-container {
+    /* top: -2.4em; */
+    /* padding: 15px 2.5%; */
+    border-radius: 10px;
+    width:200;
+    color: #00529b;
+    font-size: 18px;
+    font-size: 1.125rem;
+    font-weight: 800;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+  }
+
+  .button-container {
+    /* top: -2.4em; */
+    padding: 15px 2.5%;
+    border-radius: 10px;
+    width:500;
+    height:500;
+    /* border: 6px solid #FA0; */
+  }
+
+  .shuffle-button-container {
+    /* top: -2.4em; */
+    padding: 15px 2.5%;
+    border-radius: 10px;
+    width: 200;
+    /* border: 6px solid #FA0; */
+  }
+
+  * {
+    box-sizing: border-box;
+}

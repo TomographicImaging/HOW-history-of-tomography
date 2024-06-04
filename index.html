@@ -5,30 +5,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOW</title>
     <script src="https://unpkg.com/packery@2/dist/packery.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/preset-confetti@3/tsparticles.preset.confetti.bundle.min.js"></script>
     <!-- <script src="packery.pkgd.min.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://unpkg.com/draggabilly@3/dist/draggabilly.pkgd.min.js"></script>
     <link rel="stylesheet" href="style.css">
-
     <script>
+    
+      
 
 $(document).ready(function(){
-    $('.button-container').click(function() {
+    $('.check_button').click(function() {
         // Your code here
-        $('#result').text('Button clicked');
+        var correct_order = true
+        let correct_order_array = [6, 2, 4, 7, 1, 5, 3, 0]
+        pckry.getItemElements().forEach(itemElem => {
+            if (itemElem.style.left != correct_order_array[$(itemElem).attr("index")]*210+"px") {
+              correct_order = false
+            }
+            });
+         if (correct_order == true){
+          $('#result').text('Order is correct!');
+          $('#date1').text('1843');
+          $('#date2').text('1895');
+          $('#date3').text('1914');
+          $('#date4').text('1917');
+          $('#date5').text('1949');
+          $('#date6').text('1971');
+          $('#date7').text('1979');
+          $('#date8').text('2007');
+
+          // Shuffle the order if 1 minute passes on correct-order screen
+          var time = new Date().getTime();
+            $(document.body).bind("mousemove keypress", function(e) {
+                time = new Date().getTime();
+            });
+
+            function refresh() {
+                if(new Date().getTime() - time >= 60000) 
+                    window.location.reload(true);
+                else 
+                    setTimeout(refresh, 10000);
+            }
+
+            setTimeout(refresh, 10000);
+         } else {
+          $('#result').text('Order is not correct!');
+         }
+        update_button();
+
+        
+    });
+
+    $('.shuffle_button').click(function() {
+        window.location.reload();
         update_button();
     });
+
+
+  var i = 0;
+  pckry.getItemElements().forEach(itemElem => {
+    $(itemElem).attr('index', i)
+    i=(i+1);
+      console.log('Index:',  $(itemElem).attr("index"));
+      console.log('Position of item:', itemElem.style.left);
+  })
 });
 
 // jQuery
 function update_button(event, pointer){
-    pckry.getItemElements().forEach(itemElem => {
-            // var position = pckry.getPosition(itemElem);
-            // console.log('Position of item:', itemElem);
-            console.log('Position of item:', itemElem.style.left);
-    });
 }
-
 
 document.addEventListener("DOMContentLoaded", runPackery, false);
 var pckry;
@@ -36,20 +82,20 @@ function runPackery() {
   pckry = new Packery(".grid", {
     itemSelector: ".grid-item",
     columnWidth: 200,
-    gutter: 10
+    gutter: 10,
+    horizontal: true
   });
-
+ 
   pckry.getItemElements().forEach(itemElem => {
     let draggie = new Draggabilly(itemElem, {
-      //containment: '.grid', // limit item with in boundary of container
-      handle: '.oxy-card-title',
-    //   axis: 'x',
-      containment: '.demo--containment__container'
+      containment: '.grid', // limit item with in boundary of container
+      handle: '.oxy-card',
+      axis: 'x',
+      // containment: '.demo--containment__container'
     });
     draggie.on( 'dragEnd', update_button)
     pckry.bindDraggabillyEvents(draggie);
   });
-  
   document.querySelector('.grid')
     .addEventListener('click', collapse, false);
 }
@@ -68,184 +114,298 @@ function collapse(ev) {
       isExpanded = !gridItem.classList.contains('collapsed');        
   }
   
-  if (target.getAttribute('class').match(/expand1x/i) &&  gridItem.classList.contains('twox')) {
-      gridItem.classList.remove('twox');
-      isExpanded = false;        
-  }
+
   
-  if (target.getAttribute('class').match(/expand2x/i) &&  !gridItem.classList.contains('twox')) {
-      gridItem.classList.add('twox');
-      isExpanded = true;        
-  }
+  // isExpanded ? pckry.fit(gridItem) : pckry.shiftLayout();
   
-  isExpanded ? pckry.fit(gridItem) : pckry.shiftLayout();
   
 }
 
-if (window.Element && !Element.prototype.closest) {
-  Element.prototype.closest = function(s) {
-    var matches = (this.document || this.ownerDocument).querySelectorAll(s),
-      i,
-      el = this;
-    do {
-      i = matches.length;
-      while (--i >= 0 && matches.item(i) !== el) {}
-    } while (i < 0 && (el = el.parentElement));
-    return el;
-  };
-}
-
-
+// if (window.Element && !Element.prototype.closest) {
+//   Element.prototype.closest = function(s) {
+//     var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+//       i,
+//       el = this;
+//     do {
+//       i = matches.length;
+//       while (--i >= 0 && matches.item(i) !== el) {}
+//     } while (i < 0 && (el = el.parentElement));
+//     return el;
+//   };
+// }
     </script>
 </head>
 <body>
-
+  <div class="button-container">
+    <button type="button" class="shuffle_button" style="height:50px;width:200px;font-size: 18px">Reset</button>
+  </div> 
     <div class="demo--containment__container">
-        
     <div class="grid">
-
         <!---->
+
         <div class="grid-item  mdl-shadow--2dp">
           <oxy-card>
-            <div class="oxy-card" style="background:#feabcd">
+            <div class="oxy-card" style="background:#ffadad">
               <!---->
-              <h6 class="oxy-card-title">Status 1 &nbsp;
-                <span class="collapsable">C</span>
-                <span class="expand1x">1x</span>
-                <span class="expand2x">2x</span>
+              <h6 class="oxy-card-title">Tomography Nobel Prize  &nbsp;
               </h6>
+              <div class="image_box">
+                <img src="Pictures/resized/cormack_hounsfield.png" style="width:200px;">
+              </div>
+              <span class="collapsable">Did you know:</span>
               <div class="oxy-card-content">
                 <div>
-                    Click on<br>
-                    C : to collapse/expand<br>
-                    1x : set the size to 1 unit<br>
-                    2x : set the size to 2 unit<br>
+                  The Nobel Prize in Physiology/ Medicine was awarded to Allan Cormack and Godfrey Hounsfield for their work on computer assisted tomography.
                 </div>
               </div>
             </div>
           </oxy-card>
-        </div>
-        
-        <div class="grid-item twox ">
-          <oxy-card>
-            <div class="oxy-card mdl-shadow--2dp" style="background:#4286f4">
-              <!---->
-              <h6 class="oxy-card-title">Status 2  &nbsp;
-                <span class="collapsable">C</span>
-                <span class="expand1x">1x</span>
-                <span class="expand2x">2x</span>
-              </h6>
-              <div class="oxy-card-content">
-                <div>
-                  <form>
-                    name <input>
-                    <button>button</button>
-                  </form>
-                  <br>
-                  make sure form is accessible
-                </div>
-              </div>
-            </div>
-          </oxy-card>
+          <div class="result-container" id="date7">
+          </div>
         </div>
         
           <div class="grid-item  mdl-shadow--2dp">
           <oxy-card>
-            <div class="oxy-card"  style="background:#84ffda">
+            <div class="oxy-card"  style="background:#ffd6a5">
               <!---->
-              <h6 class="oxy-card-title">Status 3  &nbsp;
-                <span class="collapsable">C</span>
-                <span class="expand1x">1x</span>
-                <span class="expand2x">2x</span>
+              <h6 class="oxy-card-title">X-rays used in medicine  &nbsp;
               </h6>
+              <div class="image_box">
+                <img src="Pictures/resized/curie.jpg" style="width:200px;">
+              </div>
+              <span class="collapsable">Did you know:</span>
               <div class="oxy-card-content">
                 <div>
-                  content
+                  X-rays started to be used as a tool in medicine very soon after their discovery, for example in World War 1. The picture shows a mobile x-ray unit developed and run by Nobel prize winner Marie Curie.
                 </div>
               </div>
             </div>
           </oxy-card>
+          <div class="result-container" id="date3">
+          </div>
         </div>
         
           <div class="grid-item  mdl-shadow--2dp">
           <oxy-card>
-            <div class="oxy-card" style="background:#d7ffba">
+            <div class="oxy-card" style="background:#fdffb6">
               <!---->
-              <h6 class="oxy-card-title">Status 4  &nbsp;
-                <span class="collapsable">C</span>
-                <span class="expand1x">1x</span>
-                <span class="expand2x">2x</span>
+              <h6 class="oxy-card-title">Programmable computer &nbsp;
               </h6>
+              <div class="image_box">
+                <img src="Pictures/resized/baby.jpg" style="width:200px;">
+              </div>
+              <span class="collapsable">Did you know:</span>
               <div class="oxy-card-content">
                 <div>
-                  content
+                  The Manchester baby machine was the first stored program computer. Its development paved the way for using computers for complex calculations, like tomographic reconstruction.
                 </div>
               </div>
             </div>
           </oxy-card>
+          <div class="result-container" id="date5">
+          </div>
         </div>
-        
-          <div class="grid-item  mdl-shadow--2dp">
-          <oxy-card>
-            <div class="oxy-card" style="background:#ffd3ba">
-              <!---->
-              <h6 class="oxy-card-title">Status 5  &nbsp;
-                <span class="collapsable">C</span>
-                <span class="expand1x">1x</span>
-                <span class="expand2x">2x</span>
-              </h6>
-              <div class="oxy-card-content">
-                <div>
-                  content
-                </div>
-              </div>
-            </div>
-          </oxy-card>
-        </div>
-        
-          <div class="grid-item  mdl-shadow--2dp">
-          <oxy-card>
-            <div class="oxy-card" style="background:#ffbaf2">
-              <!---->
-              <h6 class="oxy-card-title">Status 6  &nbsp;
-                <span class="collapsable">C</span>
-                <span class="expand1x">1x</span>
-                <span class="expand2x">2x</span>
-              </h6>
-              <div class="oxy-card-content">
-                <div>
-                  content
-                </div>
-              </div>
-            </div>
-          </oxy-card>
-        </div>
-        
+
         <div class="grid-item  mdl-shadow--2dp">
           <oxy-card>
-            <div class="oxy-card" style="background:#adffff">
+            <div class="oxy-card" style="background:#caffbf">
               <!---->
-              <h6 class="oxy-card-title">Status 7  &nbsp;
-                <span class="collapsable">C</span>
-                <span class="expand1x">1x</span>
-                <span class="expand2x">2x</span>
+              <h6 class="oxy-card-title">Diamond Light Source opens  &nbsp;
               </h6>
+              <div class="image_box">
+                <img src="Pictures/resized/dls.jpg" style="width:200px;">
+              </div>
+              <span class="collapsable">Did you know:</span>
               <div class="oxy-card-content">
                 <div>
-                  content
+                  The UK's synchrotron Diamond Light Source is used for a wide range of science including high throughput tomographic imaging on samples as varied as space science and archaelogy.
                 </div>
               </div>
             </div>
           </oxy-card>
+          <div class="result-container" id="date8">
+          </div>
+        </div> 
+        
+        <div class="grid-item mdl-shadow--2dp">
+          <oxy-card>
+            <div class="oxy-card mdl-shadow--2dp" style="background:#9bf6ff">
+              <!---->
+              <h6 class="oxy-card-title">Discovery of x-rays  &nbsp;
+              </h6>
+              <div class="image_box">
+                <img src="Pictures/resized/rontgen.jpg" style="width:200px;">
+              </div>
+              <span class="collapsable">Did you know:</span>
+              <div class="oxy-card-content">
+                <div>
+                  The picture shows the first x-ray image, taken of Anna Bertha Ludwig's hand by Wilhelm Röntgen shortly after the discovery of x-rays. The image shows the bones of her hand and her wedding ring.
+                </div>
+              </div>
+            </div>
+          </oxy-card>
+          <div class="result-container" id="date2">
+          </div>
         </div>
-      </div>
+
+          <div class="grid-item  mdl-shadow--2dp">
+          <oxy-card>
+            <div class="oxy-card" style="background:#a0c4ff">
+              <!---->
+              <h6 class="oxy-card-title">First CT scanner  &nbsp;
+              </h6>
+              <div class="image_box">
+                <img src="Pictures/resized/emi.jpg" style="width:200px;">
+              </div>
+              <span class="collapsable">Did you know:</span>
+              <div class="oxy-card-content">
+                <div>
+                  The first CT scanner was created at EMI central research laboratories by Godfrey Hounsfield, and later used to perform the first brain scans on patients.
+                </div>
+              </div>
+            </div>
+          </oxy-card>
+          <div class="result-container" id="date6">
+          </div>
+        </div>
+
+        <div class="grid-item  mdl-shadow--2dp">
+          <oxy-card>
+            <div class="oxy-card" style="background:#bdb2ff">
+              <!---->
+              <h6 class="oxy-card-title">Radon transform &nbsp;
+              </h6>
+              <div class="image_box">
+                <img src="Pictures/resized/radon.jpg" style="width:200px;">
+              </div>
+              <span class="collapsable">Did you know:</span>
+              <div class="oxy-card-content">
+                <div>
+                  Johann Radon was the mathematician to first describe the integral transform of lines through a volume, a technique required to reconstruct an image from 2D x-ray projections.  
+                </div>
+              </div>
+            </div>
+          </oxy-card>
+          <div class="result-container" id="date4">
+          </div>
+        </div>
+
+        <div class="grid-item  mdl-shadow--2dp">
+          <oxy-card>
+            <div class="oxy-card" style="background:#ffc6ff">
+              <!---->
+              <h6 class="oxy-card-title">First computer algorithm &nbsp;
+              </h6>
+              <div class="image_box">
+                <img src="Pictures/resized/lovelace.jpg" style="width:200px;">
+              </div>
+              <span class="collapsable">Did you know:</span>
+              <div class="oxy-card-content">
+                <div>
+                    The first computer algorithm was written by Ada Lovelace, it was designed to be used on a hypothetical computational device to calculate the sequence of Bernoulli numbers.
+                </div>
+              </div>
+            </div>
+          </oxy-card>
+          <div class="result-container" id="date1">
+          </div>
+        </div>
+
+    </div>
 
     </div>
       <div class="button-container">
-        <button type="button">Click Me!</button>
+        <button type="button" id='btn' class="check_button" style="height:50px;width:200px;font-size: 18px">Check order!</button>
+        <div class="result-container" id="result">
+          <!-- Here to appear the result -->
+          <script>
+            const btn = document.getElementById('btn');
+      
+      btn.addEventListener('click', () => {
+        var correct_order = true
+        let correct_order_array = [6, 2, 4, 7, 1, 5, 3, 0]
+        pckry.getItemElements().forEach(itemElem => {
+            if (itemElem.style.left != correct_order_array[$(itemElem).attr("index")]*210+"px") {
+              correct_order = false
+            }
+            });
+         if (correct_order == true){
+          tsParticles.load({
+            id: "tsparticles",
+            options: {
+              emitters: [
+                {
+                  life: {
+                    duration: 5,
+                    count: 1,
+                  },
+                  position: {
+                    x: 15,
+                    y: 30,
+                  },
+                  particles: {
+                    move: {
+                      direction: "top-right",
+                    },
+                  },
+                },
+                {
+                  life: {
+                    duration: 5,
+                    count: 1,
+                  },
+                  position: {
+                    x: 50,
+                    y: 0,
+                  },
+                  particles: {
+                    move: {
+                      direction: "top-right",
+                    },
+                  },
+                },
+                {
+                  life: {
+                    duration: 5,
+                    count: 1,
+                  },
+                  position: {
+                    x: 75,
+                    y: 30,
+                  },
+                  particles: {
+                    move: {
+                      direction: "top-left",
+                    },
+                  },
+                },
+                {
+                  life: {
+                    duration: 5,
+                    count: 1,
+                  },
+                  position: {
+                    x: 50,
+                    y: 40,
+                  },
+                  particles: {
+                    move: {
+                      direction: "top-left",
+                    },
+                  },
+                },
+              ],
+              preset: "confetti",
+            },
+          });
+            
+        }
+      });
+
+        </script>
+
+      </div>
     </div>
-    <div id="result">
-        <!-- Here to appear the result -->
-    </div>
+    
 </body>
 </html>
