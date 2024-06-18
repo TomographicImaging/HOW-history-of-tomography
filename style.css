@@ -18,13 +18,23 @@ body {
           transition: transform 0.2s;
 }
 
+.header{
+  font-size: 70px;
+  font-weight: 600;
+  align-self: center;
+  background-image: linear-gradient(to left, #553c9a, #b393d3);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
 
 /* Description styles */
-description {
-  font-size: 200px; /* Adjust as needed */
+.description {
+  font-size: 20px; /* Adjust as needed */
   font-weight: 400;
+  align-self: center;
   color: #28085c;
-  margin-top: 10px;
 }
 
 .oxy-card-title {
