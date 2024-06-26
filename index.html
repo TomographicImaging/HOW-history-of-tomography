@@ -25,13 +25,20 @@ $(document).ready(function(){
 
         function check_order(){
               pckry.getItemElements().forEach(itemElem => {
-                if (itemElem.style.left != parseFloat((correct_order_array[$(itemElem).attr("index")]*(widget_width + gutter_width)).toFixed(2)) + "px") {
+                var position = parseFloat((itemElem.style.left.replace(/px$/, ''))).toFixed(0) + "px"
+                var target = (correct_order_array[$(itemElem).attr("index")]*(widget_width + gutter_width)).toFixed(0) + "px"
+                
+                if (position != target) {
                   correct_order = false
+                  // console.log("Position", position)
+                  // console.log("Target", target)
                   $('#oxycard'+$(itemElem).attr("index")).css({backgroundColor: color_array[$(itemElem).attr("index")]});
                   $('#date'+correct_order_array[$(itemElem).attr("index")]).text('');
+                  
                 }else{
                   $('#oxycard'+$(itemElem).attr("index")).css({backgroundColor: '#27f26e'});
-                  $('#date'+correct_order_array[$(itemElem).attr("index")]).text('Correct!');
+                  $('#date'+correct_order_array[$(itemElem).attr("index")]).text('✔');
+                  toggleFreeze($(itemElem).attr("index"))
                 }
                 });
             if (correct_order == true){
@@ -52,7 +59,7 @@ $(document).ready(function(){
             });
 
             function refresh() {
-                if(new Date().getTime() - time >= 60000) 
+                if(new Date().getTime() - time >= 1200000) 
                     window.location.reload(true);
                 else 
                     setTimeout(refresh, 10000);
@@ -61,8 +68,10 @@ $(document).ready(function(){
             setTimeout(refresh, 10000);
 
          } else {
+          
           $(document.body).bind("mousemove keypress", function(e) {
-            check_order()
+            // check_order()
+            pckry.layout();
             });
          }
         update_button();
@@ -92,6 +101,7 @@ function update_button(event, pointer){
 
 document.addEventListener("DOMContentLoaded", runPackery, false);
 var pckry;
+var draggies = [];
 function runPackery() {
   pckry = new Packery(".grid", {
     itemSelector: ".grid-item",
@@ -109,9 +119,32 @@ function runPackery() {
     });
     draggie.on( 'dragEnd', update_button)
     pckry.bindDraggabillyEvents(draggie);
+    draggies.push(draggie);
   });
   
 }
+
+
+// Function to toggle freeze state of a tile
+function toggleFreeze(tileId) {
+  var tile = document.querySelector(`.grid-item[index='${tileId}']`);
+  if (tile.classList.contains('frozen')) {
+  }else{
+    tile.classList.add('frozen');
+    // console.log(tileId)
+    // console.log(tile)
+    var draggieIndex = draggies.findIndex(d => d.element === tile);
+    // console.log(draggieIndex)
+    var draggie = draggies[draggieIndex];
+    draggie.disable();
+    draggies.splice(draggieIndex, 1);
+    // console.log("I got here")
+    pckry.stamp(tile)
+    pckry.layout();
+    console.log(draggies)
+  }
+    
+  }
 
 function start_confetti(){
   tsParticles.load({
@@ -191,14 +224,14 @@ function start_confetti(){
   <div class = "description">Embark on a journey through time to uncover groundbreaking discoveries in tomography. Can you put these milestones in the correct sequence? Let's find out!</div>
   <div class="demo--containment__container2">
   <div class="grid2">
-    <div class="grid-item2">1843</div>
-    <div class="grid-item2">1895</div>
-    <div class="grid-item2">1914</div>
-    <div class="grid-item2">1917</div>
-    <div class="grid-item2">1949</div>
-    <div class="grid-item2">1971</div>
-    <div class="grid-item2">1979</div>
-    <div class="grid-item2">2007</div>
+    <div class="grid-item-date">1843</div>
+    <div class="grid-item-date">1895</div>
+    <div class="grid-item-date">1914</div>
+    <div class="grid-item-date">1917</div>
+    <div class="grid-item-date">1949</div>
+    <div class="grid-item-date">1971</div>
+    <div class="grid-item-date">1979</div>
+    <div class="grid-item-date">2007</div>
     </div>
     </div>
     <div class="demo--containment__container">
@@ -365,46 +398,28 @@ function start_confetti(){
     </div>
     <div class="demo--containment__container2">
       <div class="grid2">
-        <div class="grid-item2"><div class="result-container" id="date0"></div></div>
-        <div class="grid-item2"><div class="result-container" id="date1"></div></div>
-        <div class="grid-item2"><div class="result-container" id="date2"></div></div>
-        <div class="grid-item2"><div class="result-container" id="date3"></div></div>
-        <div class="grid-item2"><div class="result-container" id="date4"></div></div>
-        <div class="grid-item2"><div class="result-container" id="date5"></div></div>
-        <div class="grid-item2"><div class="result-container" id="date6"></div></div>
-        <div class="grid-item2"><div class="result-container" id="date7"></div></div>
+        <div class="grid-item-result"><div class="result-container" id="date0"></div></div>
+        <div class="grid-item-result"><div class="result-container" id="date1"></div></div>
+        <div class="grid-item-result"><div class="result-container" id="date2"></div></div>
+        <div class="grid-item-result"><div class="result-container" id="date3"></div></div>
+        <div class="grid-item-result"><div class="result-container" id="date4"></div></div>
+        <div class="grid-item-result"><div class="result-container" id="date5"></div></div>
+        <div class="grid-item-result"><div class="result-container" id="date6"></div></div>
+        <div class="grid-item-result"><div class="result-container" id="date7"></div></div>
         </div>
         </div>
 
       <div class="button-container">
-        <button type="button" id='btn' class="check_button" class="inline" style="height:50px;width:10vw;">Check order!</button>
-          <button type="button" class="shuffle_button" class="inline" style="height:50px;width:10vw;">Reset</button>
-      
+        <button type="button" id='btn' class="check_button" class="inline" style="height:5vh;width:10vw;">Check order!</button>
+          <button type="button" class="shuffle_button" class="inline" style="height:5vh;width:10vw;">Reset</button>
+          
         
-        <div class="result-container" id="result" class="floated">
-          <!-- Here to appear the result -->
-          <script>
-            const btn = document.getElementById('btn');
+
       
-      btn.addEventListener('click', () => {
-        var correct_order = true
-        let correct_order_array = [6, 2, 4, 7, 1, 5, 3, 0]
-        pckry.getItemElements().forEach(itemElem => {
-            if (itemElem.style.left != correct_order_array[$(itemElem).attr("index")]*9*window.innerWidth + 10) {
-              correct_order = false
-            }
-            });
-          
-         if (correct_order == true){
-          
-            
-        }
-      });
-
-        </script>
-
-      </div>
     </div>
+    <!-- <div class="logo">
+    <img src="Science_Up_Close_Logo_CMYK.png" class="float-right" style="height:5vh;">
+    </div> -->
     
     
 </body>

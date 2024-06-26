@@ -10,7 +10,11 @@ body {
   overflow: hidden;
   padding-left: 1vw;
   width: 96vw;
-  /* height: 99vh; */
+  /* background-image: src="Science_Up_Close_Logo_CMYK.png"; */
+  background-image: url("Science_Up_Close_Logo_CMYK.png");
+  background-repeat: no-repeat;
+  background-position: calc(100% - 3vw) calc(100% - 3vh);;
+  background-size: 25vh; /* Adjust size as needed */
 
 }
 
@@ -58,7 +62,7 @@ body {
 }
 
 .oxy-card-content {
-  height: 30vh;
+  height: 25vh;
 }
 
 .collapsable {
@@ -81,8 +85,12 @@ body {
 .grid-item {
   float: left;
   width: var(--widget-width);
+  z-index: 100;
 }
-.grid-item2 {
+.grid-item .frozen{
+  z-index: 10;
+}
+.grid-item-date {
   float: left;
   width: var(--widget-width-plus-gutter);
   color:#28085c;
@@ -90,6 +98,16 @@ body {
   font-weight: 800;
   font-family: Verdana, Arial, Helvetica, sans-serif;
 }
+
+.grid-item-result {
+  float: left;
+  width: var(--widget-width-plus-gutter);
+  color:#28085c;
+  font-size: 50vw;
+  font-weight: 800;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
 
 .oxy-card .oxy-card-title {
   border-bottom: 1px solid hsla(0, 0%, 63%, .2);
@@ -154,8 +172,10 @@ body {
 
   .result-container {
     color: #28085c;
-    font-size: 0.85vw;
+    font-size: 1.5vw;
     font-weight: 800;
+    /* pad: 2.5vw; */
+    margin-left: 5vw;
     font-family: Verdana, Arial, Helvetica, sans-serif;
     padding: .0275vw;
     padding-right: .275vw;
