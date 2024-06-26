@@ -1,10 +1,17 @@
-/* $widget-width: 200px; */
+:root{
+--widget-width: calc(10vw + 0px);
 /* $widget-height: 200px; */
-/* $widget-gutter: 0px; */
+--widget-width-plus-gutter: calc(10vw + 1vw);
+--total-width:
 /* $columns: 3; */
+}
 
 body {
   overflow: hidden;
+  padding-left: 1vw;
+  width: 96vw;
+  /* height: 99vh; */
+
 }
 
 
@@ -19,22 +26,26 @@ body {
 }
 
 .header{
-  font-size: 70px;
+  font-family: Verdana, Arial, Helvetica, sans-serif; 
+  font-size: 2.5vw;
   font-weight: 600;
   align-self: center;
   background-image: linear-gradient(to left, #553c9a, #b393d3);
   color: transparent;
   background-clip: text;
   -webkit-background-clip: text;
+
 }
 
 
 /* Description styles */
 .description {
-  font-size: 20px; /* Adjust as needed */
+  font-family: Verdana, Arial, Helvetica, sans-serif; 
+  font-size: 1vw; /* Adjust as needed */
   font-weight: 400;
   align-self: center;
   color: #28085c;
+  margin: 1vw;
 }
 
 .oxy-card-title {
@@ -47,61 +58,79 @@ body {
 }
 
 .oxy-card-content {
-  height: 230px;
+  height: 30vh;
 }
 
 .collapsable {
   font-family: Verdana, Arial, Helvetica, sans-serif; 
-  color: #00529b;
-  font-size: 14px;
-  font-weight: 800;
+  color: #28085c;
+  font-size: 0.85vw;
+  font-weight: 600;
+  padding: .275vw;
 }
 
 .image_box {
-  height: 300px;
+  height: 9/10*var(--widget-width);
+  width: var(--widget-width)
 }
 
 .collapsed .oxy-card-content {
   display: none;
 }
-.grid {
-  width: (200px * 3 + 10px * (3 - 1));
-}
 
 .grid-item {
   float: left;
-  width: 200px;
+  width: var(--widget-width);
 }
-.grid-item.twox {
-  width: 200px * 2 + 10px;
+.grid-item2 {
+  float: left;
+  width: var(--widget-width-plus-gutter);
+  color:#28085c;
+  font-size: 0.85vw;
+  font-weight: 800;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 
 .oxy-card .oxy-card-title {
   border-bottom: 1px solid hsla(0, 0%, 63%, .2);
-  color: #00529b;
-  font-size: 18px;
-  font-size: 1.125rem;
+  color:#28085c;
+  font-size: 0.85vw;
   font-weight: 800;
   font-family: Verdana, Arial, Helvetica, sans-serif;
   margin: 0;
-  padding: .625rem;
+  padding: .275vw;
   text-transform: uppercase;
 }
 
 
 .oxy-card .oxy-card-content {
-  padding: 10px;
+  padding: .275vw;
   font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 0.84vw;
+  font-weight: 450;
 }
 
 /*****************/
 .grid {
+  width: 95vw;
+  /* columnWidth: 200;
+  gutter: 10vw; */
   -webkit-transform-origin: top center;
   transform-origin: top center;
   transition: -webkit-transform .5s;
   transition: transform .5s;
   transition: transform .5s, -webkit-transform .5s;
 }
+
+.grid2 {
+  width: 95vw;
+  -webkit-transform-origin: top center;
+  transform-origin: top center;
+  transition: -webkit-transform .5s;
+  transition: transform .5s;
+  transition: transform .5s, -webkit-transform .5s;
+}
+
 .mdl-shadow--2dp {
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14),
     0 3px 1px -2px rgba(0, 0, 0, .2),
@@ -109,31 +138,54 @@ body {
 }
 
 .demo--containment__container {
-    top: -2.4em;
-    height: 650px;
+    top: -4.4em;
+    height: 65vh;
     padding: 15px 2.5%;
-    border-radius: 10px;
-    /* border: 6px solid #FA0; */
+    /* border-radius: 10px; */
+  }
+
+  .demo--containment__container2 {
+    top: -4.4em;
+    /* top: -2.4em; */
+    /* height: 20px; */
+    padding: 15px 2.5%;
+    /* border-radius: 10px; */
   }
 
   .result-container {
-    /* top: -2.4em; */
-    /* padding: 15px 2.5%; */
-    border-radius: 10px;
-    width:200px;
-    color: #00529b;
-    font-size: 18px;
-    font-size: 1.125rem;
+    color: #28085c;
+    font-size: 0.85vw;
     font-weight: 800;
     font-family: Verdana, Arial, Helvetica, sans-serif;
+    padding: .0275vw;
+    padding-right: .275vw;
+    /* width: var(--widget-width); */
   }
+
+  .inline {
+    display:inline-block;
+    margin-right:10vw;
+ }
+
+ .shuffle_button {
+    font-family: Verdana, Arial, Helvetica, sans-serif; 
+    font-size: 1vw; /* Adjust as needed */
+    font-weight: 400;
+ }
+
+ .check_button {
+  font-family: Verdana, Arial, Helvetica, sans-serif; 
+  font-size: 1vw; /* Adjust as needed */
+  font-weight: 400;
+}
 
   .button-container {
     /* top: -2.4em; */
     padding: 15px 2.5%;
-    border-radius: 10px;
-    width:500px;
-    height:500px;
+    border-radius: 1vw;
+    width:100vw;
+    font-family: Verdana, Arial, Helvetica, sans-serif; 
+    font-size: 2vw; /* Adjust as needed */
     /* border: 6px solid #FA0; */
   }
 
@@ -141,7 +193,7 @@ body {
     /* top: -2.4em; */
     padding: 15px 2.5%;
     border-radius: 10px;
-    width: 200px;
+    /* width: 200px; */
     /* border: 6px solid #FA0; */
   }
 

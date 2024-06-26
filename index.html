@@ -13,28 +13,38 @@
     <script>
     
       
-
+var widget_width = (10/100)*window.innerWidth
+var gutter_width = (1/100)*window.innerWidth
 $(document).ready(function(){
     $('.check_button').click(function() {
         // Your code here
+        
         var correct_order = true
         let correct_order_array = [6, 2, 4, 7, 1, 5, 3, 0]
-        pckry.getItemElements().forEach(itemElem => {
-            if (itemElem.style.left != correct_order_array[$(itemElem).attr("index")]*210+"px") {
-              correct_order = false
-            }
-            });
-         if (correct_order == true){
-          $('#result').text('Order is correct!');
-          $('#date1').text('1843');
-          $('#date2').text('1895');
-          $('#date3').text('1914');
-          $('#date4').text('1917');
-          $('#date5').text('1949');
-          $('#date6').text('1971');
-          $('#date7').text('1979');
-          $('#date8').text('2007');
+        let color_array = ['#ffadad', '#ffd6a5', '#fdffb6', '#caffbf', '#9bf6ff', '#a0c4ff', '#bdb2ff', '#ffc6ff']
 
+        function check_order(){
+              pckry.getItemElements().forEach(itemElem => {
+                if (itemElem.style.left != parseFloat((correct_order_array[$(itemElem).attr("index")]*(widget_width + gutter_width)).toFixed(2)) + "px") {
+                  correct_order = false
+                  $('#oxycard'+$(itemElem).attr("index")).css({backgroundColor: color_array[$(itemElem).attr("index")]});
+                  $('#date'+correct_order_array[$(itemElem).attr("index")]).text('');
+                }else{
+                  $('#oxycard'+$(itemElem).attr("index")).css({backgroundColor: '#27f26e'});
+                  $('#date'+correct_order_array[$(itemElem).attr("index")]).text('Correct!');
+                }
+                });
+            if (correct_order == true){
+              start_confetti()
+            }
+            return correct_order
+            }
+
+          correct_order = check_order()
+        
+         if (correct_order == true){
+
+          
           // Shuffle the order if 1 minute passes on correct-order screen
           var time = new Date().getTime();
             $(document.body).bind("mousemove keypress", function(e) {
@@ -49,8 +59,11 @@ $(document).ready(function(){
             }
 
             setTimeout(refresh, 10000);
+
          } else {
-          $('#result').text('Order is not correct!');
+          $(document.body).bind("mousemove keypress", function(e) {
+            check_order()
+            });
          }
         update_button();
 
@@ -67,9 +80,10 @@ $(document).ready(function(){
   pckry.getItemElements().forEach(itemElem => {
     $(itemElem).attr('index', i)
     i=(i+1);
-      console.log('Index:',  $(itemElem).attr("index"));
-      console.log('Position of item:', itemElem.style.left);
+
   })
+
+
 });
 
 // jQuery
@@ -81,8 +95,8 @@ var pckry;
 function runPackery() {
   pckry = new Packery(".grid", {
     itemSelector: ".grid-item",
-    columnWidth: 200,
-    gutter: 10,
+    columnWidth: widget_width,
+    gutter: gutter_width,
     horizontal: true
   });
  
@@ -96,243 +110,11 @@ function runPackery() {
     draggie.on( 'dragEnd', update_button)
     pckry.bindDraggabillyEvents(draggie);
   });
-  document.querySelector('.grid')
-    .addEventListener('click', collapse, false);
-}
-
-function collapse(ev) {
-  let isExpanded = false;
-  let target = ev.target;
-  let gridItem = target.closest('.grid-item');
-  
-  if (!target.getAttribute('class').match(/(collapsable|expand1x|expand2x)/i))   {
-    return;
-  }
-  
-  if (target.getAttribute('class').match(/collapsable/i)) {
-      gridItem.classList.toggle('collapsed');
-      isExpanded = !gridItem.classList.contains('collapsed');        
-  }
-  
-
-  
-  // isExpanded ? pckry.fit(gridItem) : pckry.shiftLayout();
-  
   
 }
 
-// if (window.Element && !Element.prototype.closest) {
-//   Element.prototype.closest = function(s) {
-//     var matches = (this.document || this.ownerDocument).querySelectorAll(s),
-//       i,
-//       el = this;
-//     do {
-//       i = matches.length;
-//       while (--i >= 0 && matches.item(i) !== el) {}
-//     } while (i < 0 && (el = el.parentElement));
-//     return el;
-//   };
-// }
-    </script>
-</head>
-<body>
-  <div class ="header">Tomography Time Traveler</div>
-  <div class = "description">Embark on a journey through time to uncover groundbreaking discoveries in tomography. Can you put these milestones in the correct sequence? Let's find out!</div>
-  <div class="button-container">
-    <button type="button" class="shuffle_button" style="height:50px;width:200px;font-size: 18px">Reset</button>
-  </div> 
-    <div class="demo--containment__container">
-    <div class="grid">
-        <!---->
-
-        <div class="grid-item  mdl-shadow--2dp">
-          <oxy-card>
-            <div class="oxy-card" style="background:#ffadad">
-              <!---->
-              <h6 class="oxy-card-title">Tomography Nobel Prize  &nbsp;
-              </h6>
-              <div class="image_box">
-                <img src="Pictures/resized/cormack_hounsfield.png" style="width:200px;">
-              </div>
-              <span class="collapsable">Did you know:</span>
-              <div class="oxy-card-content">
-                <div>
-                  The Nobel Prize in Physiology/ Medicine was awarded to Allan Cormack and Godfrey Hounsfield for their work on computer assisted tomography.
-                </div>
-              </div>
-            </div>
-          </oxy-card>
-          <div class="result-container" id="date7">
-          </div>
-        </div>
-        
-          <div class="grid-item  mdl-shadow--2dp">
-          <oxy-card>
-            <div class="oxy-card"  style="background:#ffd6a5">
-              <!---->
-              <h6 class="oxy-card-title">X-rays used in medicine  &nbsp;
-              </h6>
-              <div class="image_box">
-                <img src="Pictures/resized/curie.jpg" style="width:200px;">
-              </div>
-              <span class="collapsable">Did you know:</span>
-              <div class="oxy-card-content">
-                <div>
-                  X-rays started to be used as a tool in medicine very soon after their discovery, for example in World War 1. The picture shows a mobile x-ray unit developed and run by Nobel prize winner Marie Curie.
-                </div>
-              </div>
-            </div>
-          </oxy-card>
-          <div class="result-container" id="date3">
-          </div>
-        </div>
-        
-          <div class="grid-item  mdl-shadow--2dp">
-          <oxy-card>
-            <div class="oxy-card" style="background:#fdffb6">
-              <!---->
-              <h6 class="oxy-card-title">Programmable computer &nbsp;
-              </h6>
-              <div class="image_box">
-                <img src="Pictures/resized/baby.jpg" style="width:200px;">
-              </div>
-              <span class="collapsable">Did you know:</span>
-              <div class="oxy-card-content">
-                <div>
-                  The Manchester baby machine was the first stored program computer. Its development paved the way for using computers for complex calculations, like tomographic reconstruction.
-                </div>
-              </div>
-            </div>
-          </oxy-card>
-          <div class="result-container" id="date5">
-          </div>
-        </div>
-
-        <div class="grid-item  mdl-shadow--2dp">
-          <oxy-card>
-            <div class="oxy-card" style="background:#caffbf">
-              <!---->
-              <h6 class="oxy-card-title">Diamond Light Source opens  &nbsp;
-              </h6>
-              <div class="image_box">
-                <img src="Pictures/resized/dls.jpg" style="width:200px;">
-              </div>
-              <span class="collapsable">Did you know:</span>
-              <div class="oxy-card-content">
-                <div>
-                  The UK's synchrotron Diamond Light Source is used for a wide range of science including high throughput tomographic imaging on samples as varied as space science and archaelogy.
-                </div>
-              </div>
-            </div>
-          </oxy-card>
-          <div class="result-container" id="date8">
-          </div>
-        </div> 
-        
-        <div class="grid-item mdl-shadow--2dp">
-          <oxy-card>
-            <div class="oxy-card mdl-shadow--2dp" style="background:#9bf6ff">
-              <!---->
-              <h6 class="oxy-card-title">Discovery of x-rays  &nbsp;
-              </h6>
-              <div class="image_box">
-                <img src="Pictures/resized/rontgen.jpg" style="width:200px;">
-              </div>
-              <span class="collapsable">Did you know:</span>
-              <div class="oxy-card-content">
-                <div>
-                  The picture shows the first x-ray image, taken of Anna Bertha Ludwig's hand by Wilhelm Röntgen shortly after the discovery of x-rays. The image shows the bones of her hand and her wedding ring.
-                </div>
-              </div>
-            </div>
-          </oxy-card>
-          <div class="result-container" id="date2">
-          </div>
-        </div>
-
-          <div class="grid-item  mdl-shadow--2dp">
-          <oxy-card>
-            <div class="oxy-card" style="background:#a0c4ff">
-              <!---->
-              <h6 class="oxy-card-title">First CT scanner  &nbsp;
-              </h6>
-              <div class="image_box">
-                <img src="Pictures/resized/emi.jpg" style="width:200px;">
-              </div>
-              <span class="collapsable">Did you know:</span>
-              <div class="oxy-card-content">
-                <div>
-                  The first CT scanner was created at EMI central research laboratories by Godfrey Hounsfield, and later used to perform the first brain scans on patients.
-                </div>
-              </div>
-            </div>
-          </oxy-card>
-          <div class="result-container" id="date6">
-          </div>
-        </div>
-
-        <div class="grid-item  mdl-shadow--2dp">
-          <oxy-card>
-            <div class="oxy-card" style="background:#bdb2ff">
-              <!---->
-              <h6 class="oxy-card-title">Radon transform &nbsp;
-              </h6>
-              <div class="image_box">
-                <img src="Pictures/resized/radon.jpg" style="width:200px;">
-              </div>
-              <span class="collapsable">Did you know:</span>
-              <div class="oxy-card-content">
-                <div>
-                  Johann Radon was the mathematician to first describe the integral transform of lines through a volume, a technique required to reconstruct an image from 2D x-ray projections.  
-                </div>
-              </div>
-            </div>
-          </oxy-card>
-          <div class="result-container" id="date4">
-          </div>
-        </div>
-
-        <div class="grid-item  mdl-shadow--2dp">
-          <oxy-card>
-            <div class="oxy-card" style="background:#ffc6ff">
-              <!---->
-              <h6 class="oxy-card-title">First computer algorithm &nbsp;
-              </h6>
-              <div class="image_box">
-                <img src="Pictures/resized/lovelace.jpg" style="width:200px;">
-              </div>
-              <span class="collapsable">Did you know:</span>
-              <div class="oxy-card-content">
-                <div>
-                    The first computer algorithm was written by Ada Lovelace, it was designed to be used on a hypothetical computational device to calculate the sequence of Bernoulli numbers.
-                </div>
-              </div>
-            </div>
-          </oxy-card>
-          <div class="result-container" id="date1">
-          </div>
-        </div>
-
-    </div>
-
-    </div>
-      <div class="button-container">
-        <button type="button" id='btn' class="check_button" style="height:50px;width:200px;font-size: 18px">Check order!</button>
-        <div class="result-container" id="result">
-          <!-- Here to appear the result -->
-          <script>
-            const btn = document.getElementById('btn');
-      
-      btn.addEventListener('click', () => {
-        var correct_order = true
-        let correct_order_array = [6, 2, 4, 7, 1, 5, 3, 0]
-        pckry.getItemElements().forEach(itemElem => {
-            if (itemElem.style.left != correct_order_array[$(itemElem).attr("index")]*210+"px") {
-              correct_order = false
-            }
-            });
-         if (correct_order == true){
-          tsParticles.load({
+function start_confetti(){
+  tsParticles.load({
             id: "tsparticles",
             options: {
               emitters: [
@@ -400,6 +182,221 @@ function collapse(ev) {
               preset: "confetti",
             },
           });
+}
+
+    </script>
+</head>
+<body>
+  <div class ="header">Tomography Time Traveler</div>
+  <div class = "description">Embark on a journey through time to uncover groundbreaking discoveries in tomography. Can you put these milestones in the correct sequence? Let's find out!</div>
+  <div class="demo--containment__container2">
+  <div class="grid2">
+    <div class="grid-item2">1843</div>
+    <div class="grid-item2">1895</div>
+    <div class="grid-item2">1914</div>
+    <div class="grid-item2">1917</div>
+    <div class="grid-item2">1949</div>
+    <div class="grid-item2">1971</div>
+    <div class="grid-item2">1979</div>
+    <div class="grid-item2">2007</div>
+    </div>
+    </div>
+    <div class="demo--containment__container">
+    <div class="grid">
+      
+        <div class="grid-item  mdl-shadow--2dp">
+          
+          <oxy-card>
+            <div class="oxy-card" id="oxycard0" style="background:#ffadad">
+              <h6 class="oxy-card-title">Tomography Nobel Prize  &nbsp;
+              </h6>
+              <div class="image_box">
+                <img src="Pictures/resized/nobel.png" style="width:10vw;">
+              </div>
+              <span class="collapsable">Did you know:</span>
+              <div class="oxy-card-content">
+                <div>
+                  The Nobel Prize in Physiology/ Medicine was awarded to Allan Cormack and Godfrey Hounsfield for their work on computer assisted tomography.
+                </div>
+              </div>
+            </div>
+          </oxy-card>
+          <!-- <div class="result-container" id="date0">
+          </div> -->
+        </div>
+        
+          <div class="grid-item  mdl-shadow--2dp">
+          <oxy-card>
+            <div class="oxy-card" id="oxycard1" style="background:#ffd6a5">
+              <!---->
+              <h6 class="oxy-card-title">X-rays used in WW1  &nbsp;
+              </h6>
+              <div class="image_box">
+                <img src="Pictures/resized/curie.jpg" style="width:10vw;">
+              </div>
+              <span class="collapsable">Did you know:</span>
+              <div class="oxy-card-content">
+                <div>
+                  X-rays started to be used as a tool in medicine very soon after their discovery, for example in World War 1. The picture shows a mobile x-ray unit developed and run by Nobel prize winner Marie Curie.
+                </div>
+              </div>
+            </div>
+          </oxy-card>
+        </div>
+        
+          <div class="grid-item  mdl-shadow--2dp">
+          <oxy-card>
+            <div class="oxy-card" id="oxycard2" style="background:#fdffb6">
+              <!---->
+              <h6 class="oxy-card-title">Programmable computer &nbsp;
+              </h6>
+              <div class="image_box">
+                <img src="Pictures/resized/baby.jpg" style="width:10vw;">
+              </div>
+              <span class="collapsable">Did you know:</span>
+              <div class="oxy-card-content">
+                <div>
+                  The Manchester baby machine was the first stored program computer. Its development paved the way for using computers for complex calculations, like tomographic reconstruction.
+                </div>
+              </div>
+            </div>
+          </oxy-card>
+        </div>
+
+        <div class="grid-item  mdl-shadow--2dp">
+          <oxy-card>
+            <div class="oxy-card" id="oxycard3" style="background:#caffbf">
+              <!---->
+              <h6 class="oxy-card-title">Diamond Light Source opens  &nbsp;
+              </h6>
+              <div class="image_box">
+                <img src="Pictures/resized/dls.jpg" style="width:10vw;">
+              </div>
+              <span class="collapsable">Did you know:</span>
+              <div class="oxy-card-content">
+                <div>
+                  The UK's synchrotron Diamond Light Source is used for a wide range of science including high throughput tomographic imaging on samples as varied as space science and archaelogy.
+                </div>
+              </div>
+            </div>
+          </oxy-card>
+        </div> 
+        
+        <div class="grid-item mdl-shadow--2dp">
+          <oxy-card>
+            <div class="oxy-card mdl-shadow--2dp" id="oxycard4" style="background:#9bf6ff">
+              <!---->
+              <h6 class="oxy-card-title">Discovery of x-rays  &nbsp;
+              </h6>
+              <div class="image_box">
+                <img src="Pictures/resized/rontgen.jpg" style="width:10vw;">
+              </div>
+              <span class="collapsable">Did you know:</span>
+              <div class="oxy-card-content">
+                <div>
+                  The picture shows the first x-ray image, taken of Anna Bertha Ludwig's hand by Wilhelm Röntgen shortly after the discovery of x-rays. The image shows the bones of her hand and her wedding ring.
+                </div>
+              </div>
+            </div>
+          </oxy-card>
+        </div>
+
+          <div class="grid-item  mdl-shadow--2dp">
+          <oxy-card>
+            <div class="oxy-card" id="oxycard5" style="background:#a0c4ff">
+              <!---->
+              <h6 class="oxy-card-title">First CT scanner  &nbsp;
+              </h6>
+              <div class="image_box">
+                <img src="Pictures/resized/emi.jpg" style="width:10vw;">
+              </div>
+              <span class="collapsable">Did you know:</span>
+              <div class="oxy-card-content">
+                <div>
+                  The first CT scanner was created at EMI central research laboratories by Godfrey Hounsfield, and later used to perform the first brain scans on patients.
+                </div>
+              </div>
+            </div>
+          </oxy-card>
+        </div>
+
+        <div class="grid-item  mdl-shadow--2dp">
+          <oxy-card>
+            <div class="oxy-card" id="oxycard6" style="background:#bdb2ff">
+              <!---->
+              <h6 class="oxy-card-title">Radon transform &nbsp;
+              </h6>
+              <div class="image_box">
+                <img src="Pictures/resized/radon.png" style="width:10vw;">
+              </div>
+              <span class="collapsable">Did you know:</span>
+              <div class="oxy-card-content">
+                <div>
+                  Johann Radon was the mathematician to first describe the integral transform of lines through a volume, a technique required to reconstruct an image from 2D x-ray projections.  
+                </div>
+              </div>
+            </div>
+          </oxy-card>
+        </div>
+
+        <div class="grid-item  mdl-shadow--2dp">
+          <oxy-card>
+            <div class="oxy-card" id="oxycard7" style="background:#ffc6ff">
+              <!---->
+              <h6 class="oxy-card-title">First computer algorithm &nbsp;
+              </h6>
+              <div class="image_box">
+                <img src="Pictures/resized/lovelace.jpg" style="width:10vw;">
+              </div>
+              <span class="collapsable">Did you know:</span>
+              <div class="oxy-card-content">
+                <div>
+                    The first computer algorithm was written by Ada Lovelace, it was designed to be used on a hypothetical computational device to calculate the sequence of Bernoulli numbers.
+                </div>
+              </div>
+            </div>
+          </oxy-card>
+        </div>
+
+    </div>
+
+    
+
+    </div>
+    <div class="demo--containment__container2">
+      <div class="grid2">
+        <div class="grid-item2"><div class="result-container" id="date0"></div></div>
+        <div class="grid-item2"><div class="result-container" id="date1"></div></div>
+        <div class="grid-item2"><div class="result-container" id="date2"></div></div>
+        <div class="grid-item2"><div class="result-container" id="date3"></div></div>
+        <div class="grid-item2"><div class="result-container" id="date4"></div></div>
+        <div class="grid-item2"><div class="result-container" id="date5"></div></div>
+        <div class="grid-item2"><div class="result-container" id="date6"></div></div>
+        <div class="grid-item2"><div class="result-container" id="date7"></div></div>
+        </div>
+        </div>
+
+      <div class="button-container">
+        <button type="button" id='btn' class="check_button" class="inline" style="height:50px;width:10vw;">Check order!</button>
+          <button type="button" class="shuffle_button" class="inline" style="height:50px;width:10vw;">Reset</button>
+      
+        
+        <div class="result-container" id="result" class="floated">
+          <!-- Here to appear the result -->
+          <script>
+            const btn = document.getElementById('btn');
+      
+      btn.addEventListener('click', () => {
+        var correct_order = true
+        let correct_order_array = [6, 2, 4, 7, 1, 5, 3, 0]
+        pckry.getItemElements().forEach(itemElem => {
+            if (itemElem.style.left != correct_order_array[$(itemElem).attr("index")]*9*window.innerWidth + 10) {
+              correct_order = false
+            }
+            });
+          
+         if (correct_order == true){
+          
             
         }
       });
@@ -408,6 +405,7 @@ function collapse(ev) {
 
       </div>
     </div>
+    
     
 </body>
 </html>
