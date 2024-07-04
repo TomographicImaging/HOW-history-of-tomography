@@ -42,30 +42,32 @@ $(document).ready(function(){
                 }
                 });
             if (correct_order == true){
-              start_confetti()
+
             }
             return correct_order
             }
 
           correct_order = check_order()
-        
-         if (correct_order == true){
 
-          
-          // Shuffle the order if 1 minute passes on correct-order screen
-          var time = new Date().getTime();
+        // Shuffle the order if 1 minute passes
+        var time = new Date().getTime();
             $(document.body).bind("mousemove keypress", function(e) {
                 time = new Date().getTime();
             });
 
             function refresh() {
-                if(new Date().getTime() - time >= 1200000) 
+                if(new Date().getTime() - time >= 60000) 
                     window.location.reload(true);
                 else 
                     setTimeout(refresh, 10000);
             }
 
             setTimeout(refresh, 10000);
+
+         if (correct_order == true){
+
+          
+          
 
          } else {
           
@@ -146,76 +148,6 @@ function toggleFreeze(tileId) {
     
   }
 
-function start_confetti(){
-  tsParticles.load({
-            id: "tsparticles",
-            options: {
-              emitters: [
-                {
-                  life: {
-                    duration: 5,
-                    count: 1,
-                  },
-                  position: {
-                    x: 15,
-                    y: 30,
-                  },
-                  particles: {
-                    move: {
-                      direction: "top-right",
-                    },
-                  },
-                },
-                {
-                  life: {
-                    duration: 5,
-                    count: 1,
-                  },
-                  position: {
-                    x: 50,
-                    y: 0,
-                  },
-                  particles: {
-                    move: {
-                      direction: "top-right",
-                    },
-                  },
-                },
-                {
-                  life: {
-                    duration: 5,
-                    count: 1,
-                  },
-                  position: {
-                    x: 75,
-                    y: 30,
-                  },
-                  particles: {
-                    move: {
-                      direction: "top-left",
-                    },
-                  },
-                },
-                {
-                  life: {
-                    duration: 5,
-                    count: 1,
-                  },
-                  position: {
-                    x: 50,
-                    y: 40,
-                  },
-                  particles: {
-                    move: {
-                      direction: "top-left",
-                    },
-                  },
-                },
-              ],
-              preset: "confetti",
-            },
-          });
-}
 
     </script>
 </head>
@@ -410,8 +342,8 @@ function start_confetti(){
         </div>
 
       <div class="button-container">
-        <button type="button" id='btn' class="check_button" class="inline" style="height:5vh;width:10vw;">Check order!</button>
-          <button type="button" class="shuffle_button" class="inline" style="height:5vh;width:10vw;">Reset</button>
+        <button type="button" id='btn' class="check_button green" class="inline" style="height:5vh;width:10vw;">Check order!</button>
+          <button type="button" class="shuffle_button red" class="inline" style="height:5vh;width:10vw;">Reset</button>
           
         
 
